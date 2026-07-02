@@ -1,3 +1,4 @@
+# Ziua 1
 ## Tema #1
 Fișierele log conțin rezultatele simulărilor de Functional Coverage făcute de Synopsys pentru coverpoint-uri: 
 cp_vec, cp_pop, cp_en, cp_vote, x_en_vote
@@ -74,3 +75,11 @@ Avem o linie MISS atunci când avem 0 hit-uri, HIT dacă există hit-uri.
 > Se respectă regula 'hits>0 înseamnă HIT' pe fiecare linie?
 
 Da
+
+# Ziua 3
+
+> Un scenariu real în care DB-First bate Code-First
+
+DB-First este superior în cazul proiectelor care implică mai multe persoane și unde se folosesc mai multe limbaje  
+pentru că se menține principiul "single source of truth" folosind doar SQL direct evitând fragmentarea schemelor   
+folosind limbaje diferite.
