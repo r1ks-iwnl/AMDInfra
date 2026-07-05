@@ -11,18 +11,20 @@ def parse_file(path):
 
     header = parse_header(content)
 
-    return {
-        "run_datetime": run_datetime(header["run_date"]),       
-        **header,
-        "coverpoints": [asdict(coverpoint) for coverpoint in parse_coverpoints(content)],
-    }
+    return CoverageReport(
+        run_datetime=run_datetime(header["run_date"]),
+        result=header["result"],
+        checks=header["checks"],
+        overall_coverage=header["overall_coverage"],
+        coverpoints=parse_coverpoints(content)
+    )
 
 
 def run_datetime(run_date: str | None) -> str | None:
     if run_date is None:
         return None
 
-    return datetime.strptime(run_date, "%Y-%m-%d %H:%M:%S UTC").strftime("%Y-%m-%dT%H:%M:%S")
+    return datetime.strptime(run_date, "%Y-%m-%d %H:%M:%S UTC")
 
     
 def parse_header(text) -> dict:
@@ -101,12 +103,10 @@ def parse_coverpoints(text) -> list:
                 if ((hits > 0) != hit):
                     raise ValueError(f"Inconsistent bin status for {name}: hits={hits}, status={match.group('hit')}")
 
-                current_coverpoint.bins.append({
-                    "name": name,
-                    "hits": hits,
-                    "hit": hit,
-                    "value": value,
-                })
+                current_coverpoint.bins.append(Bin(name=name,
+                                                   hits=hits,
+                                                   hit=hit,
+                                                   value=value))
 
             if(line.strip() == "==========================================="):
                 current_coverpoint = None
@@ -126,7 +126,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
-    print(json.dumps(result, indent=2))
+    json_data = asdict(result)
+
+    print(json.dumps(json_data, indent=2, default=str)) #default is currently fallback for datetime
     return 0
 
 
