@@ -8,18 +8,18 @@ from app.parser.coverage_parser import parse_file, parse_coverpoints
 
 def test_overall_83_5(logs_dir):
     report = parse_file(logs_dir / "83_50_overall_FCOV.txt")
-    assert report["overall_coverage"] == 83.5
+    assert report.overall_coverage == 83.5
 
 
 def test_overall_96_25(logs_dir):
     report = parse_file(logs_dir / "96_25_overall_FCOV.txt")
-    assert report["overall_coverage"] == 96.25
+    assert report.overall_coverage == 96.25
 
 
 def test_total_bins_is_29_and_misses_are_correct(logs_dir):
     report = parse_file(logs_dir / "78_5_overall_FCOV.txt")
-    total_bins = sum(len(coverpoint["bins"]) for coverpoint in report["coverpoints"])
-    total_misses = sum(not bin_entry["hit"] for coverpoint in report["coverpoints"] for bin_entry in coverpoint["bins"])
+    total_bins = sum(len(coverpoint.bins) for coverpoint in report.coverpoints)
+    total_misses = sum(not bin_entry.hit for coverpoint in report.coverpoints for bin_entry in coverpoint.bins)
 
     assert total_bins == 29
     assert total_misses == 12
@@ -27,12 +27,12 @@ def test_total_bins_is_29_and_misses_are_correct(logs_dir):
 
 def test_known_bin_cp_vec_3_has_expected_hits(logs_dir):
     report = parse_file(logs_dir / "78_5_overall_FCOV.txt")
-    cp_vec = next(coverpoint for coverpoint in report["coverpoints"] if coverpoint["name"] == "cp_vec")
-    known_bin = next(bin_entry for bin_entry in cp_vec["bins"] if bin_entry["name"] == "vec[ 3]")
+    cp_vec = next(coverpoint for coverpoint in report.coverpoints if coverpoint.name == "cp_vec")
+    known_bin = next(bin_entry for bin_entry in cp_vec.bins if bin_entry.name == "vec[ 3]")
 
-    assert known_bin["hits"] == 0
-    assert known_bin["hit"] is False
-    assert known_bin["value"] == "0011"
+    assert known_bin.hits == 0
+    assert known_bin.hit is False
+    assert known_bin.value == "0011"
 
 
 def test_parse_coverpoints_raises_on_inconsistent_bin_status():
