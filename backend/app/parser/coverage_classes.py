@@ -1,6 +1,8 @@
 import re
+from datetime import datetime
 from dataclasses import dataclass, field
 from enum import Enum, auto
+
 
 
 RE_RUN_DATE = re.compile(r"^\[(?P<run_date>[^\]]+)\]")
@@ -28,3 +30,18 @@ class Coverpoint:
     name: str
     coverage: float
     bins: list = field(default_factory=list)
+
+@dataclass
+class Bin:
+    name: str
+    hits: int
+    hit: bool
+    value: str
+
+@dataclass()
+class CoverageReport:
+    run_datetime: datetime
+    result: str
+    checks: int
+    overall_coverage: float
+    coverpoints: list

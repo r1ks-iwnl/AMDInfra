@@ -3,27 +3,21 @@ import sys
 
 import pytest
 
-BACKEND_ROOT = Path(__file__).resolve().parents[1]
-if str(BACKEND_ROOT) not in sys.path:
-    sys.path.insert(0, str(BACKEND_ROOT))
-
 from app.parser.coverage_parser import parse_file, parse_coverpoints
 
-LOGS = Path(__file__).resolve().parents[2] / "logs"
 
-
-def test_overall_83_5():
-    report = parse_file(LOGS / "83_50_overall_FCOV.txt")
+def test_overall_83_5(logs_dir):
+    report = parse_file(logs_dir / "83_50_overall_FCOV.txt")
     assert report["overall_coverage"] == 83.5
 
 
-def test_overall_96_25():
-    report = parse_file(LOGS / "96_25_overall_FCOV.txt")
+def test_overall_96_25(logs_dir):
+    report = parse_file(logs_dir / "96_25_overall_FCOV.txt")
     assert report["overall_coverage"] == 96.25
 
 
-def test_total_bins_is_29_and_misses_are_correct():
-    report = parse_file(LOGS / "78_5_overall_FCOV.txt")
+def test_total_bins_is_29_and_misses_are_correct(logs_dir):
+    report = parse_file(logs_dir / "78_5_overall_FCOV.txt")
     total_bins = sum(len(coverpoint["bins"]) for coverpoint in report["coverpoints"])
     total_misses = sum(not bin_entry["hit"] for coverpoint in report["coverpoints"] for bin_entry in coverpoint["bins"])
 
@@ -31,8 +25,8 @@ def test_total_bins_is_29_and_misses_are_correct():
     assert total_misses == 12
 
 
-def test_known_bin_cp_vec_3_has_expected_hits():
-    report = parse_file(LOGS / "78_5_overall_FCOV.txt")
+def test_known_bin_cp_vec_3_has_expected_hits(logs_dir):
+    report = parse_file(logs_dir / "78_5_overall_FCOV.txt")
     cp_vec = next(coverpoint for coverpoint in report["coverpoints"] if coverpoint["name"] == "cp_vec")
     known_bin = next(bin_entry for bin_entry in cp_vec["bins"] if bin_entry["name"] == "vec[ 3]")
 
