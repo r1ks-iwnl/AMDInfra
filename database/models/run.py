@@ -3,8 +3,12 @@ from sqlalchemy.orm import mapped_column, Mapped, relationship
 from datetime import datetime
 from decimal import Decimal
 
+from typing import TYPE_CHECKING
+
 from base import Base
 
+if TYPE_CHECKING:
+    from models import Coverpoint
 
 class Run(Base):
     __tablename__ = "runs"
