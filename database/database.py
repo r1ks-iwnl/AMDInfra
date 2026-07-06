@@ -37,7 +37,7 @@ class Run(Base):
     checks: Mapped[int] = mapped_column(Integer)
     overall_coverage: Mapped[Decimal] = mapped_column(Numeric(5,2))
     uploaded_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
-    uploaded_by: Mapped[str] = mapped_column(String, nullable=True)
+    uploaded_by: Mapped[str | None] = mapped_column(String, nullable=True)
     coverpoints: Mapped[list["Coverpoint"]] = relationship("Coverpoint", back_populates="run",
                                cascade="all, delete-orphan", passive_deletes=True)
     
