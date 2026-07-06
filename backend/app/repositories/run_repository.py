@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from database.database import Run
+from database import Run
 
 def get_all_runs(session: Session, limit=20, offset=0):
     return session.query(Run).order_by(Run.run_date.desc()).limit(limit).offset(offset).all()
