@@ -3,7 +3,7 @@ from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from typing import TYPE_CHECKING
 
-from base import Base
+from ..base import Base
 
 if TYPE_CHECKING:
     from models import Coverpoint
