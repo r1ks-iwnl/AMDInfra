@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from typing import TYPE_CHECKING
 
-from base import Base
+from ..base import Base
 
 if TYPE_CHECKING:
     from models import Coverpoint
