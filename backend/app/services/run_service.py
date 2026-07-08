@@ -24,9 +24,9 @@ def create_run_from_log(session, filename, text, uploaded_by = None):
 
         run.coverpoints.append(coverpoint)
 
-    saved_run = run_repository.create_run(session, run) 
+    run_repository.create_run(session, run) 
 
-    return attach_run_statistics(saved_run)
+    return attach_run_statistics(run)
 
 def attach_run_statistics(run: Run) -> Run:
     #Attach total_bins and missed_bins on Run and Coverpoints.
