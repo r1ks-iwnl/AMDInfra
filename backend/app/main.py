@@ -4,8 +4,8 @@ from backend.app.routers import runs
 
 app = FastAPI(title="Functional Coverage Dashboard")
 
-app.add_middleware(CORSMiddleware, 
-                   allow_origins=["http://localhost:5137"],
+app.add_middleware(CORSMiddleware,
+                   allow_origins=["http://localhost:5173"],
                    allow_credentials=True,
                    allow_methods=["*"],
                    allow_headers=["*"])
