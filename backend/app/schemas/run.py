@@ -10,7 +10,8 @@ class RunSummary(BaseModel):
     overall_coverage: float
     model_config = ConfigDict(from_attributes=True)
 
-class RunDetail(BaseModel):
+# inherits summary fields so the detail response also identifies which run it is
+class RunDetail(RunSummary):
     checks: int
     uploaded_at: datetime
     uploaded_by: str | None
