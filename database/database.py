@@ -2,12 +2,13 @@ from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 
+from backend.app.config import get_settings
 from .base import Base
 from .models import Run, Coverpoint, Bin
 
-DATABASE_URL = "sqlite:///database/app.db"
+settings = get_settings()
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(settings.DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autoflush=False, bind=engine)
 
 

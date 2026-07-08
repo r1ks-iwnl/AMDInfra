@@ -19,6 +19,16 @@ def parse_file(path):
         coverpoints=parse_coverpoints(content)
     )
 
+def parse_text(content):
+    header = parse_header(content)
+
+    return CoverageReport(
+        run_datetime=run_datetime(header["run_date"]),
+        result=header["result"],
+        checks=header["checks"],
+        overall_coverage=header["overall_coverage"],
+        coverpoints=parse_coverpoints(content)
+    )
 
 def run_datetime(run_date: str | None) -> str | None:
     if run_date is None:
