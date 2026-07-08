@@ -1,21 +1,25 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 from .coverpoint import CoverpointOut
 from datetime import datetime
 
 class RunSummary(BaseModel):
-    id: int
-    filename: str
-    run_date: datetime
-    result: str
-    overall_coverage: float
+    id: int = Field(..., examples=[1], description="Database assigned unique ID")
+    filename: str = Field(..., examples=["78_5_overall_FCOV.txt"], description="Log file name")
+    run_date: datetime = Field(..., examples=["2026-07-08T14:30:00"], description="Date and time of run")
+    result: str = Field(..., examples=["PASSED", "FAILED"], description="Result of run")
+    overall_coverage: float = Field(..., examples=[78.5], description="Total functional coverage percentage")
+    
     model_config = ConfigDict(from_attributes=True)
+
 
 # inherits summary fields so the detail response also identifies which run it is
 class RunDetail(RunSummary):
-    checks: int
-    uploaded_at: datetime
-    uploaded_by: str | None
-    total_bins: int
-    missed_bins: int
-    coverpoints: list[CoverpointOut] = []
+    checks: int = Field(..., examples=[1450], description="Number of checks ran")
+    uploaded_at: datetime = Field(..., examples=["2026-07-08T18:11:00"], description="Timestamp at the moment of upload")
+    uploaded_by: str | None = Field(None, examples=["john.doe@gmail.com"], description="Uploader's email address")
+    total_bins: int = Field(..., examples=[120], description="Total bins across all coverpoints")
+    missed_bins: int = Field(..., examples=[15], description="Total bins with hits = 0")
+    
+    coverpoints: list[CoverpointOut] = Field(description="Complete list of coverpoints associated with run")
+    
     model_config = ConfigDict(from_attributes=True)

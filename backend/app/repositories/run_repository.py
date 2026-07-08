@@ -18,3 +18,13 @@ def get_run_by_id(session: Session, run_id: int):
         .filter(Run.id == run_id)
         .first()
     )
+
+def create_run(session: Session, run: Run):
+    try:
+        session.add(run)
+        session.commit()
+        session.refresh(run)
+        return run
+    except Exception as exc:
+        session.rollback()
+        raise exc

@@ -1,3 +1,6 @@
 # AMDInfra
 
-### Proiect ce conține backend și frontend care facilitează Functional Coverage a circuitelor digitale.
+### Backend/Frontend app for hosting & analysis of hardware Functional Coverage reports
+
+## Duplication
+Duplicate entries are allowed in the database.
