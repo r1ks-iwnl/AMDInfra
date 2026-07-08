@@ -14,6 +14,5 @@ def list_runs(limit: int = 20, offset: int = 0, result=None, min_coverage=None, 
 def get_run(run_id: int, db=Depends(get_db)):
     run = run_service.get_run(db, run_id)
     if run is None:
-        # HTTP concerns live in the router, not the service
         raise HTTPException(status_code=404, detail="Run not found")
     return run

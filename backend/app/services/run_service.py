@@ -6,15 +6,11 @@ def list_runs(session, limit=20, offset=0, result=None, min_coverage=None):
 def get_run(session, run_id: int):
     run = run_repository.get_run_by_id(session, run_id)
 
-    # you can safely delete this if, after you read the comments bellow
-    if run is None: # it works with paranthesis (you already know that, obviously), but it's not pythonic
-        # service stays HTTP-agnostic; the router decides the 404 status code
-        return None
+    if run:
+        for cp in run.coverpoints:
+            cp.total_bins = len(cp.bins)
+            cp.missed_bins = sum(1 for b in cp.bins if not b.hit)
 
-    for cp in run.coverpoints:
-        cp.total_bins = len(cp.bins)
-        cp.missed_bins = sum(1 for b in cp.bins if not b.hit)
-
-    run.total_bins = sum(cp.total_bins for cp in run.coverpoints)
-    run.missed_bins = sum(cp.missed_bins for cp in run.coverpoints)
+        run.total_bins = sum(cp.total_bins for cp in run.coverpoints)
+        run.missed_bins = sum(cp.missed_bins for cp in run.coverpoints)
     return run
