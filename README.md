@@ -4,3 +4,6 @@
 
 ## Duplication
 Duplicate entries are allowed in the database.
+
+## POST/GET Security
+Both methods require logging in.

@@ -9,15 +9,7 @@ def parse_file(path):
     with open(path, "r") as file:
         content = file.read()
 
-    header = parse_header(content)
-
-    return CoverageReport(
-        run_datetime=run_datetime(header["run_date"]),
-        result=header["result"],
-        checks=header["checks"],
-        overall_coverage=header["overall_coverage"],
-        coverpoints=parse_coverpoints(content)
-    )
+    return parse_text(content)
 
 def parse_text(content):
     header = parse_header(content)
