@@ -7,10 +7,9 @@ from ..config import get_settings
 
 settings = get_settings()
 
-# Mutăm schema aici! Ea indică Swagger-ului cum să obțină token-ul.
 oauth2_scheme = OAuth2AuthorizationCodeBearer(
     authorizationUrl="https://accounts.google.com/o/oauth2/v2/auth",
-    tokenUrl="/auth/callback", # URL relativ e suficient aici
+    tokenUrl="/auth/callback",
     scopes={
         "openid": "OpenID Connect",
         "email": "Email address access",

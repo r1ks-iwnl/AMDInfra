@@ -23,7 +23,7 @@ async def login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 @router.get("/callback", include_in_schema=False)
-@router.post("/callback", name="callback_post", summary="Procesează login-ul OAuth din Swagger")
+@router.post("/callback", name="callback_post", summary="Processes Swagger's OAuth login")
 async def callback(request: Request):
     is_post = request.method == "POST"
     data = await request.form() if is_post else request.query_params
