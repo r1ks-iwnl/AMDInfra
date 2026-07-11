@@ -7,8 +7,7 @@ def list_runs(session, limit=20, offset=0, result=None, min_coverage=None):
     return run_repository.get_all_runs(session, limit, offset, result, min_coverage)
 
 def get_run(session, run_id: int):
-    run = run_repository.get_run_by_id(session, run_id)
-    return attach_run_statistics(run)
+    return run_repository.get_run_by_id(session, run_id)
 
 def create_run_from_log(session, filename, text, uploaded_by = None):
     report = parse_text(text)
@@ -26,18 +25,4 @@ def create_run_from_log(session, filename, text, uploaded_by = None):
 
     run_repository.create_run(session, run) 
 
-    return attach_run_statistics(run)
-
-def attach_run_statistics(run: Run) -> Run:
-    #Attach total_bins and missed_bins on Run and Coverpoints.
-    if not run:
-        return run
-
-    for cp in run.coverpoints:
-        cp.total_bins = len(cp.bins)
-        cp.missed_bins = sum(1 for b in cp.bins if not b.hit)
-
-    run.total_bins = sum(cp.total_bins for cp in run.coverpoints)
-    run.missed_bins = sum(cp.missed_bins for cp in run.coverpoints)
-    
     return run

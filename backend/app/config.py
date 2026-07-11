@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import model_validator
 import os
 
 #Find .env regardless of CWD
@@ -22,10 +23,19 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8"
     )
     
+    @model_validator(mode="after")
+    def validate_domains_config(self) -> "Settings":
+        if not self.allowed_domains_list:
+            raise ValueError(
+                "\n[ERROR] 'ALLOWED_DOMAINS' cannot be empty!" #Will cause 403 Forbidden errors for all login attempts otherwise.
+                "Please configure at least one authorized domain in your .env file (e.g., @domain.com)."
+            )
+        return self
+    
     @property
     def allowed_domains_list(self) -> list[str]:
         return [d.strip() for d in self.ALLOWED_DOMAINS.split(",") if d.strip()]
-
+    
 @lru_cache
 def get_settings():
     return Settings()

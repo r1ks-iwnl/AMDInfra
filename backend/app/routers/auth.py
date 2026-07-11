@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from authlib.integrations.starlette_client import OAuth
+from fastapi.responses import RedirectResponse
 from starlette.requests import Request
+import urllib.parse
 
 from ..services.auth_service import authenticate_with_google
 from ..config import get_settings
@@ -8,19 +9,19 @@ from ..config import get_settings
 settings = get_settings()
 router = APIRouter(tags=["Auth"])
 
-oauth = OAuth()
-oauth.register(
-    name="google",
-    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    client_id=settings.GOOGLE_CLIENT_ID,
-    client_secret=settings.GOOGLE_CLIENT_SECRET,
-    client_kwargs={"scope" : "openid email profile"}
-)
-
 @router.get("/login")
 async def login(request: Request):
-    redirect_uri = request.url_for("callback")
-    return await oauth.google.authorize_redirect(request, redirect_uri)
+    params = {
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "redirect_uri": str(request.url_for("callback")),
+        "response_type": "code",
+        "scope": "openid email profile",
+        "access_type": "offline",
+        "prompt": "select_account"
+    }
+
+    google_url = f"https://accounts.google.com/o/oauth2/v2/auth?{urllib.parse.urlencode(params)}"
+    return RedirectResponse(google_url)
 
 @router.get("/callback", include_in_schema=False)
 @router.post("/callback", name="callback_post", summary="Processes Swagger's OAuth login")
