@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 from .coverpoint import CoverpointOut
 from datetime import datetime
 
@@ -17,9 +17,16 @@ class RunDetail(RunSummary):
     checks: int = Field(..., examples=[1450], description="Number of checks ran")
     uploaded_at: datetime = Field(..., examples=["2026-07-08T18:11:00"], description="Timestamp at the moment of upload")
     uploaded_by: str | None = Field(None, examples=["john.doe@gmail.com"], description="Uploader's email address")
-    total_bins: int = Field(..., examples=[120], description="Total bins across all coverpoints")
-    missed_bins: int = Field(..., examples=[15], description="Total bins with hits = 0")
-    
     coverpoints: list[CoverpointOut] = Field(description="Complete list of coverpoints associated with run")
     
     model_config = ConfigDict(from_attributes=True)
+
+    @computed_field(description="Total bins across all coverpoints")
+    @property
+    def total_bins(self) -> int:
+        return sum(cp.total_bins for cp in self.coverpoints)
+
+    @computed_field(description="Number of bins with zero hits")
+    @property
+    def missed_bins(self) -> int:
+        return sum(cp.missed_bins for cp in self.coverpoints)
