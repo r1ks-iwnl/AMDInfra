@@ -1,7 +1,7 @@
 import httpx
 from jose import jwt
 
-from ..auth.dependencies import create_access_token
+from ..auth.jwt import create_access_token
 from ..config import get_settings
 
 settings = get_settings()
