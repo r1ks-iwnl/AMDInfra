@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from starlette.requests import Request
 import urllib.parse
 
@@ -42,7 +42,17 @@ async def callback(request: Request):
             redirect_uri=redirect_uri, 
             code_verifier=data.get("code_verifier")
         )
-        return {"access_token": jwt_token, "token_type": "bearer"}
+        #Request comming from Swagger
+        if is_post:
+            return {"access_token": jwt_token, "token_type": "bearer"}
+            
+        #Request coming from frontend
+        html_script = f"""
+        <script>
+            window.opener.postMessage({{ token: "{jwt_token}" }}, "http://localhost:5173");
+        </script>
+        """
+        return HTMLResponse(content=html_script)
         
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
