@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import api from '../api/client'
 
-const runs = ref([])        // datele reactive
+const runs = ref([])
 const loading = ref(true)
 const error = ref(null)
 

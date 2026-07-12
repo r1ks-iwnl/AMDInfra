@@ -1,8 +1,6 @@
 import axios from 'axios'
 
 const api = axios.create({
-  // By using a relative path starting with /api,
-  // Axios will automatically call http://localhost:5173/api/...
   baseURL: '/',
 })
 

@@ -42,11 +42,11 @@ async def callback(request: Request):
             redirect_uri=redirect_uri, 
             code_verifier=data.get("code_verifier")
         )
-    # 1. Dacă cererea e POST, vine de la Swagger UI -> Întoarcem JSON pur
+        #Request comming from Swagger
         if is_post:
             return {"access_token": jwt_token, "token_type": "bearer"}
             
-        # 2. Dacă e GET, vine din fluxul normal de browser (Frontend pop-up) -> Întoarcem scriptul HTML
+        #Request coming from frontend
         html_script = f"""
         <script>
             window.opener.postMessage({{ token: "{jwt_token}" }}, "http://localhost:5173");
