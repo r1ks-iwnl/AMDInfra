@@ -56,7 +56,7 @@ export const useRunsStore = defineStore('runs', {
       } else {
         // activate sorting on a different column
         this.sortBy = column
-        this.sortDesc = false
+        this.sortDesc = true
       }
     }
   }

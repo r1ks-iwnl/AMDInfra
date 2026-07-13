@@ -1,12 +1,5 @@
 <script setup>
-import { ref } from 'vue'
 import { RouterLink , RouterView } from 'vue-router'
-
-const isLoggedIn = ref(false)
-
-function onLoginDone() {
-  isLoggedIn.value = true
-}
 </script>
 
 <template>

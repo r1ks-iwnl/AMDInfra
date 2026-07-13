@@ -18,7 +18,8 @@ watch(
 )
 </script>
 
-<template>
+
+<template><!-- nesting nightmare, change entirely or perhaps some grouping via styling is enough to make it more readable. -->
   <p v-if="store.loading">Loading...</p>
   <p v-else-if="store.error">{{ store.error }}</p>
   <ul v-else-if="store.currentRun">

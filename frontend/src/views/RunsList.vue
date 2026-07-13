@@ -63,7 +63,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-/* Adăugăm stiluri specifice pentru antetul sortabil */
 .sortable-th {
   cursor: pointer;
 }

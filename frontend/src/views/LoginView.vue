@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 
 const auth = useAuthStore()
 const router = useRouter()
-const loginUrl = getLoginUrl
 
 function handleLogin() {
   const width = 500, height = 600
@@ -13,7 +12,7 @@ function handleLogin() {
   const top = window.screen.height / 2 - height / 2
 
   const popup = window.open(
-    loginUrl,
+    getLoginUrl,
     'Google Login',
     `width=${width},height=${height},left=${left},top=${top}`
   )
