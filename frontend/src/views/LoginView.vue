@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue'
-import api, { getLoginUrl } from '@/api/client'
+import { getLoginUrl } from '@/api/client'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 

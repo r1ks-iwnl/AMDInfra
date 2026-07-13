@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRunDetailStore } from '@/stores/rundetail'
 import { fmtDate, fmtPct, covClass } from '@/utils/format'
