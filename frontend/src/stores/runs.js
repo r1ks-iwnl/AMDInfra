@@ -39,7 +39,6 @@ export const useRunsStore = defineStore('runs', {
         ? state.runs.reduce((s, r) => s + r.overall_coverage, 0) /
           state.runs.length
         : 0,
-
   },
 
   actions: {
