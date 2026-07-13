@@ -21,6 +21,10 @@ export default defineConfig({
       '/runs': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+      },
+      '/auth': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
       }
     }
   }

@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { RouterLink , RouterView } from 'vue-router'
 import RunsList from './views/RunsList.vue';
 import LoginView from './views/LoginView.vue';
 
-const isLoggedIn = ref(!!localStorage.getItem('access_token'))
+const isLoggedIn = ref(false)
 
 function onLoginDone() {
   isLoggedIn.value = true
@@ -12,8 +13,10 @@ function onLoginDone() {
 </script>
 
 <template>
-  <LoginView v-if="!isLoggedIn" @auth-success="onLoginDone" />
-  <RunsList v-else />
+  <nav class="app-nav">
+    <RouterLink to="/runs">Runs</RouterLink>
+  </nav>
+  <RouterView/>
 </template>
 
 <style scoped>
