@@ -4,7 +4,8 @@ import { useAuthStore } from '@/stores/auth.js'
 const routes = [
   { path: '/runs', name: 'runs', component: () => import('../views/RunsList.vue'), meta: { requiresAuth: true} },
   { path: '/runs/:id', name: 'run-detail', component: () => import('../views/RunDetail.vue'), meta: { requiresAuth: true}},
-  { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') }
+  { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
+  { path: '/', redirect: '/runs'}
 ]
 
 const router = createRouter({

@@ -1,11 +1,12 @@
 <script setup>
 import { onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useRunsStore } from '@/stores/runs'
 import { fmtDate, fmtPct, covClass } from '@/utils/format'
 import { getSortIcon } from '@/utils/icons'
 
 const store = useRunsStore()
+const router = useRouter()
 
 onMounted(async () => {
   // Maintain sort state
@@ -20,45 +21,61 @@ onMounted(async () => {
     <p v-if="store.loading" class="loading-state">Loading runs...</p>
     <p v-else-if="store.error" class="error-state">{{ store.error }}</p>
     <p v-else-if="!store.sortedRuns || store.sortedRuns.length === 0" class="empty-state">
-      No runs uploaded.
+      Runs have not yet been uploaded.
     </p>
 
-    <table v-else class="runs-table">
-      <thead>
-        <tr>
-          <th @click="store.changeSort('run_date')" class="sortable-th">
-            Date {{ getSortIcon('run_date', store.sortBy, store.sortDesc) }}
-          </th>
-          <th @click="store.changeSort('filename')" class="sortable-th">
-            File {{ getSortIcon('filename', store.sortBy, store.sortDesc) }}
-          </th>
-          <th @click="store.changeSort('overall_coverage')" class="sortable-th">
-            Overall coverage {{ getSortIcon('overall_coverage', store.sortBy, store.sortDesc) }}
-          </th>
-          <th @click="store.changeSort('result')" class="sortable-th">
-            Result {{ getSortIcon('result', store.sortBy, store.sortDesc) }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="run in store.sortedRuns" :key="run.id">
-          <td>{{ fmtDate(run.run_date) }}</td>
-          <td>
-            <RouterLink :to="`/runs/${run.id}`" class="run-link">
+    <div v-else>
+      <div class="summary-bar">
+        <div class="summary-item">
+          <span class="summary-label">Total Runs</span>
+          <span class="summary-value">{{ store.totalRuns }}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Average Coverage</span>
+          <span class="summary-value" :class="covClass(store.avgCoverage)">
+            {{ fmtPct(store.avgCoverage) }}
+          </span>
+        </div>
+      </div>
+      <table class="runs-table">
+        <thead>
+          <tr>
+            <th @click="store.changeSort('run_date')" class="sortable-th">
+              Date {{ getSortIcon('run_date', store.sortBy, store.sortDesc) }}
+            </th>
+            <th @click="store.changeSort('filename')" class="sortable-th">
+              File {{ getSortIcon('filename', store.sortBy, store.sortDesc) }}
+            </th>
+            <th @click="store.changeSort('overall_coverage')" class="sortable-th">
+              Overall coverage {{ getSortIcon('overall_coverage', store.sortBy, store.sortDesc) }}
+            </th>
+            <th @click="store.changeSort('result')" class="sortable-th">
+              Result {{ getSortIcon('result', store.sortBy, store.sortDesc) }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="run in store.sortedRuns" :key="run.id"
+            @click="router.push(`/runs/${run.id}`)" class="run-row"
+            @keydown.enter="router.push(`/runs/${run.id}`)"
+            @keydown.space.prevent="router.push(`/runs/${run.id}`)"
+            tabindex="0">
+            <td>{{ fmtDate(run.run_date) }}</td>
+            <td>
               {{ run.filename }}
-            </RouterLink>
-          </td>
-          <td :class="covClass(run.overall_coverage)">
-            {{ fmtPct(run.overall_coverage) }}
-          </td>
-          <td>
-            <span class="badge" :class="run.result.toLowerCase()">
-              {{ run.result }}
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td :class="covClass(run.overall_coverage)">
+              {{ fmtPct(run.overall_coverage) }}
+            </td>
+            <td>
+              <span class="badge" :class="run.result.toLowerCase()">
+                {{ run.result }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -79,6 +96,9 @@ th, td {
 }
 th {
   background-color: #f4f6f7;
+}
+.run-row {
+  cursor: pointer;
 }
 
 .badge {
@@ -110,6 +130,36 @@ th {
 }
 .cov-bad {
   color: #e74c3c !important;
+  font-weight: bold;
+}
+
+.summary-bar {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.summary-item {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 20px;
+  border-radius: 8px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  color: #bfafe3;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-value {
+  font-size: 1.6rem;
   font-weight: bold;
 }
 </style>

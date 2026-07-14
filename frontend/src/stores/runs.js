@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { getRuns } from '@/api/runs'
 import api from '@/api/client'
 
 export const useRunsStore = defineStore('runs', {
@@ -46,8 +47,7 @@ export const useRunsStore = defineStore('runs', {
       this.loading = true
       this.error = null
       try {
-        const { data } = await api.get('/runs/')
-        this.runs = data
+        this.runs = await getRuns()
       } catch (e) {
         this.error = e.response?.data?.detail || "Couldn't load runs."
       } finally {
