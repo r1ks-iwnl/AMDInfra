@@ -13,7 +13,8 @@ app = FastAPI(
     swagger_ui_init_oauth={
         "clientId": settings.GOOGLE_CLIENT_ID,
         "appName": "Functional Coverage Dashboard",
-        "usePkceWithAuthorizationCodeGrant": True
+        "usePkceWithAuthorizationCodeGrant": True,
+        "scopes": "openid email profile"
     }
 )
 
