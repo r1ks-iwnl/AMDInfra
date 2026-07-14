@@ -77,7 +77,9 @@ const chartOptions = {
       <section class="header-card">
         <h1>{{ store.currentRun.filename }}</h1>
         <div class="meta-grid">
-          <div><strong>Date:</strong> {{ fmtDate(store.currentRun.run_date) }}</div>
+          <div><strong>Ran at:</strong> {{ fmtDate(store.currentRun.run_date) }}</div>
+          <div><strong>Uploaded at:</strong> {{ fmtDate(store.currentRun.uploaded_at) }}</div>
+          <div><strong>Uploaded by:</strong> {{ store.currentRun.uploaded_by }}</div>
           <div>
             <strong>Result:</strong>
             <span class="badge" :class="store.currentRun.result.toLowerCase()">{{ store.currentRun.result }}</span>
