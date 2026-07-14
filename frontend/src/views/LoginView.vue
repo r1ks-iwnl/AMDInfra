@@ -31,8 +31,34 @@ function handleLogin() {
 
 <template>
   <div class="auth-bar">
-    <button v-if="!isAuthenticated" @click="handleLogin" class="btn-login">
+    <button @click="handleLogin" class="btn-login">
       Log In
     </button>
   </div>
 </template>
+
+<style scoped>
+.auth-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.btn-login {
+  display: inline-block;
+  background-color: #1f1841;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  border-color: #81d4fa;
+  color: #81d4fa;
+}
+</style>

@@ -84,6 +84,10 @@ onMounted(async () => {
   cursor: pointer;
 }
 
+.sortable-th:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
 .runs-table {
   width: 100%;
   border-collapse: collapse;
@@ -91,11 +95,30 @@ onMounted(async () => {
 }
 th, td {
   padding: 10px;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   text-align: left;
 }
+
 th {
-  background-color: #f4f6f7;
+  background-color: #1f1841;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.run-link {
+  color: #81d4fa !important;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.run-link:hover {
+  color: #b3e5fc !important;
+}
+
+.loading-state, .error-state, .empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #bfafe3 !important;
+  font-size: 1.1rem;
 }
 .run-row {
   cursor: pointer;
@@ -110,14 +133,14 @@ th {
   text-transform: uppercase;
 }
 .badge.passed {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.15);
 }
 .badge.failed {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  border: 1px solid rgba(46, 204, 113, 0.3);
 }
 
 .cov-good {
