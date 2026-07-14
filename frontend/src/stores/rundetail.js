@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import api from '@/api/client'
+import { getRunDetail } from '@/api/runs'
 
 export const useRunDetailStore = defineStore('runDetail', {
   state: () => ({
@@ -15,8 +16,7 @@ export const useRunDetailStore = defineStore('runDetail', {
       this.currentRun = null
 
       try {
-        const { data } = await api.get(`/runs/${runId}`)
-        this.currentRun = data
+        this.currentRun = await getRunDetail(runId)
       } catch (e) {
         this.error = e.response?.data?.detail || "Couldn't load run details."
       } finally {
