@@ -2,14 +2,14 @@ html, body {
   background-color: #2e255d;
   color: #ffffff;
 }
-/* To be applied */
+
 :root {
   --color-bg-dark: #1f1841;
   --color-accent: #81d4fa;
   --color-accent-hover: #b3e5fc;
+  --color-accent-transparent: rgba(129, 212, 250, 0.1);
 
   --color-text-secondary: #e2def5;
-  --color-text-muted: #bfafe3;
 
   --color-success: #2ecc71;
   --color-warning: #f39c12;
@@ -20,9 +20,5 @@ html, body {
   --color-legend-bg: rgba(0, 0, 0, 0.2);
 
   --color-badge-passed-bg: rgba(46, 204, 113, 0.15);
-  --color-badge-passed-border: rgba(46, 204, 113, 0.3);
   --color-badge-failed-bg: rgba(231, 76, 60, 0.15);
-  --color-badge-failed-border: rgba(231, 76, 60, 0.3);
-  --color-badge-passed-text: #d4edda;
-  --color-badge-failed-text: #f8d7da;
 }

@@ -49,15 +49,15 @@ const width = computed(() => `${Math.min(100, Math.max(0, pct.value))}%`)
 }
 
 .cov-good {
-  background-color: #2ecc71 !important;
-  color: #2ecc71 !important;
+  background-color: var(--color-success) !important;
+  color: var(--color-success) !important;
 }
 .cov-warn {
-  background-color: #f39c12 !important;
-  color: #f39c12 !important;
+  background-color: var(--color-warning) !important;
+  color: var(--color-warning) !important;
 }
 .cov-bad {
-  background-color: #e74c3c !important;
-  color: #e74c3c !important;
+  background-color: var(--color-bad) !important;
+  color: var(--color-bad) !important;
 }
 </style>

@@ -20,6 +20,6 @@ defineProps({ bin: {type: Object, required: true}})
   font-size: 0.9rem;
   font-weight: 600;
 }
-.hit { background-color: #2ecc71; }
-.miss { background-color: #e74c3c; }
+.hit { background-color: var(--color-success); }
+.miss { background-color: var(--color-bad); }
 </style>

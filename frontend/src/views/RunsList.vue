@@ -100,24 +100,24 @@ th, td {
 }
 
 th {
-  background-color: #1f1841;
+  background-color: var(--color-bg-dark);
   font-weight: 600;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 2px solid var(--color-grid-line);
 }
 
 .run-link {
-  color: #81d4fa !important;
+  color: var(--color-accent) !important;
   font-weight: 500;
   text-decoration: underline;
 }
 .run-link:hover {
-  color: #b3e5fc !important;
+  color: var(--color-accent-hover) !important;
 }
 
 .loading-state, .error-state, .empty-state {
   text-align: center;
   padding: 40px;
-  color: #bfafe3 !important;
+  color: var(--color-text-secondary) !important;
   font-size: 1.1rem;
 }
 .run-row {
@@ -133,26 +133,26 @@ th {
   text-transform: uppercase;
 }
 .badge.passed {
-  background-color: rgba(46, 204, 113, 0.15);
-  color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.15);
+  background-color: var(--color-badge-passed-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
 }
 .badge.failed {
-  background-color: rgba(231, 76, 60, 0.15);
-  color: #e74c3c;
-  border: 1px solid rgba(46, 204, 113, 0.3);
+  background-color: var(--color-badge-failed-bg);
+  color: var(--color-bad);
+  border: 1px solid var(--color-bad);
 }
 
 .cov-good {
-  color: #2ecc71 !important;
+  color: var(--color-success) !important;
   font-weight: bold;
 }
 .cov-warn {
-  color: #f39c12 !important;
+  color: var(--color-warning) !important;
   font-weight: bold;
 }
 .cov-bad {
-  color: #e74c3c !important;
+  color: var(--color-bad) !important;
   font-weight: bold;
 }
 
@@ -176,7 +176,7 @@ th {
 
 .summary-label {
   font-size: 0.8rem;
-  color: #bfafe3;
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
