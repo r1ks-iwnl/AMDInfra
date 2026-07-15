@@ -2,7 +2,7 @@
 import { computed, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useRunDetailStore } from '@/stores/rundetail'
-import { covClass, fmtDate, fmtPct } from '@/utils/format'
+import { covClass, fmtDate } from '@/utils/format'
 
 import BinCell from '@/components/BinCell.vue'
 import CoverageBar from '@/components/CoverageBar.vue'
@@ -66,10 +66,13 @@ const chartOptions = {
 
 <template>
   <div class="run-detail-wrapper">
+    <nav class="top-nav">
+      <RouterLink to="/runs" class="back-link">← Back to runs</RouterLink>
+    </nav>
     <div v-if="store.loading" class="state-box">Loading run details...</div>
 
     <div v-else-if="store.error" class="state-box error-404">
-      <p>{{ store.error }}</p>
+      <h2>{{ store.error }}</h2>
     </div>
 
     <div v-else-if="store.currentRun" class="dashboard">
@@ -84,6 +87,7 @@ const chartOptions = {
             <strong>Result:</strong>
             <span class="badge" :class="store.currentRun.result.toLowerCase()">{{ store.currentRun.result }}</span>
           </div>
+          <div><strong>Checks:</strong> {{ store.currentRun.checks }} </div>
           <div><strong>Bins (missed / total):</strong> {{ store.currentRun.missed_bins }} / {{ store.currentRun.total_bins }}</div>
         </div>
 
@@ -110,7 +114,7 @@ const chartOptions = {
       <section class="coverpoints-container">
         <div
           v-for="cp in store.currentRun.coverpoints"
-          :key="cp.id"
+          :key="cp.name"
           class="cp-card"
           :class="`${covClass(cp.coverage)}-border`">
 
@@ -125,7 +129,7 @@ const chartOptions = {
             class="bin-grid"
             :class="cp.name === 'cp_vec' ? 'grid-4x4' : 'grid-auto'">
 
-            <BinCell v-for="b in cp.bins" :key="b.id" :bin="b" />
+            <BinCell v-for="b in cp.bins" :key="b.name" :bin="b" />
           </div>
         </div>
       </section>
@@ -244,19 +248,6 @@ const chartOptions = {
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   margin-top: 8px;
-}
-
-.cov-good {
-  background-color: var(--color-success) !important;
-  color: var(--color-success) !important;
-}
-.cov-warn {
-  background-color: var(--color-warning) !important;
-  color: var(--color-warning) !important;
-}
-.cov-bad {
-  background-color: var(--color-bad) !important;
-  color: var(--color-bad) !important;
 }
 
 .cov-good-border {

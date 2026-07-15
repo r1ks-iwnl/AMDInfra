@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useRunsStore } from '@/stores/runs'
 import { fmtDate, fmtPct, covClass } from '@/utils/format'
 import { getSortIcon } from '@/utils/icons'
