@@ -9,3 +9,12 @@ export async function getRunDetail(id) {
   const { data } = await api.get(`/runs/${id}`)
   return data
 }
+
+export function uploadRun(file) {
+  const form = new FormData()
+  form.append('file', file)
+
+  return api.post('/runs/upload', form, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  }).then((r) => r.data)
+}

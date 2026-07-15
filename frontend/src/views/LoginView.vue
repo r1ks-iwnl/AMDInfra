@@ -1,10 +1,13 @@
 <script setup>
 import { getLoginUrl } from '@/api/client'
 import { useAuthStore } from '@/stores/auth'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const auth = useAuthStore()
 const router = useRouter()
+const route = useRoute()
+
+const allowedOrigin = import.meta.env.VITE_API_ORIGIN
 
 function handleLogin() {
   const width = 500, height = 600
@@ -17,13 +20,25 @@ function handleLogin() {
     `width=${width},height=${height},left=${left},top=${top}`
   )
 
-  window.addEventListener('message', (event) => {
-    if (event.origin !== 'http://localhost:8000') return
+  if (!popup) {
+    auth.authError = 'Popup was blocked. Please allow popups and try again.'
+    return
+  }
 
-    if (event.data && event.data.token) {
-      auth.login(event.data.token)
+  window.addEventListener('message', (event) => {
+    if (event.origin !== allowedOrigin) {
+      console.warn(
+        `Login origin mismatch. Expected: ${allowedOrigin}, got: ${event.origin}. ` +
+        `Check API_ORIGIN env var.`
+      )
+      auth.authError = 'Login failed.'
       popup.close()
-      router.push('/runs')
+      return
+    }
+    if (event.data && event.data.token) {
+      auth.login(event.data.token, event.data.email)
+      popup.close()
+      router.push(route.query.redirect || '/runs')
     }
   }, { once: true })
 }
@@ -31,26 +46,44 @@ function handleLogin() {
 
 <template>
   <div class="auth-bar">
-    <button @click="handleLogin" class="btn-login">
+    <button v-if="!auth.isLoggedIn" @click="handleLogin" class="btn-login">
       Log In
     </button>
+    <div v-if="auth.authError" class="state-box">
+      <div class="error-state">
+        <h3>{{ auth.authError }}</h3>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .auth-bar {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
   margin: 1.5rem 0;
 }
+
+.state-box {
+  text-align: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  color: var(--color-text-secondary);
+}
+
+.error-state { color: var(--color-warning); }
 
 .btn-login {
   display: inline-block;
   background-color: var(--color-bg-dark);
   color: #ffffff;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-family: inherit;
   padding: 8px 18px;
   border-radius: 6px;
   border: 1px solid var(--color-grid-line);
