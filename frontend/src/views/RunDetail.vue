@@ -250,22 +250,6 @@ const chartOptions = {
   margin-top: 8px;
 }
 
-<<<<<<< HEAD
-=======
-.cov-good {
-  background-color: var(--color-success) !important;
-  color: var(--color-success) !important;
-}
-.cov-warn {
-  background-color: var(--color-warning) !important;
-  color: var(--color-warning) !important;
-}
-.cov-bad {
-  background-color: var(--color-bad) !important;
-  color: var(--color-bad) !important;
-}
-
->>>>>>> d3d681596d1c73d3e12ea955aa00e413e9885e9f
 .cov-good-border {
   border-color: var(--color-success);
 }
