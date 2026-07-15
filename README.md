@@ -5,6 +5,44 @@
 ## Configuration
 Set up .env according to .env.example to avoid unexpected behaviour.
 
+# Command examples
+
+### Backend
+From the repository root:
+
+```powershell
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn backend.app.main:app --reload
+python -m database.seed
+```
+
+From the `backend/tests` directory:
+
+```powershell
+pytest -v
+```
+
+### Database
+From the `database` directory:
+
+```powershell
+alembic upgrade head
+alembic revision --autogenerate -m "your message"
+```
+
+### Frontend
+From the `frontend` directory:
+
+```powershell
+npm install
+npm run dev
+npm run lint
+npm run build
+npm run preview
+```
+
 ## Duplication
 Duplicate entries are allowed in the database.
 

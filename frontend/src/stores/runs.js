@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { getRuns } from '@/api/runs'
-import api from '@/api/client'
 
 export const useRunsStore = defineStore('runs', {
   state: () => ({
