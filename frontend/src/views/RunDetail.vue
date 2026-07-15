@@ -49,12 +49,12 @@ const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
-    y: { beginAtZero: true, max: 100, ticks: { color: '#bfafe3' },
+    y: { beginAtZero: true, max: 100, ticks: { color: '#e2def5' },
       grid: {
             color: 'rgba(255, 255, 255, 0.15)',
             borderColor: 'rgba(255, 255, 255, 0.3)'
           } },
-    x: { ticks: { color: '#bfafe3' },
+    x: { ticks: { color: '#e2def5' },
       grid: {
             color: 'rgba(255, 255, 255, 0.15)',
             borderColor: 'rgba(255, 255, 255, 0.3)'
@@ -142,7 +142,7 @@ const chartOptions = {
 }
 .top-nav { margin-bottom: 20px; }
 .back-link {
-  color: #81d4fa;
+  color: var(--color-accent);
   text-decoration: none;
   font-weight: 600;
 }
@@ -153,14 +153,14 @@ const chartOptions = {
   padding: 60px 20px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
-  color: #bfafe3;
+  color: var(--color-text-secondary);
 }
-.error-404 h2 { color: #e74c3c; margin-bottom: 10px; }
+.error-404 h2 { color: var(--color-bad); margin-bottom: 10px; }
 .btn-primary {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
-  background: #1f1841;
+  background: var(--color-bg-dark);
   color: #ffffff;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 6px;
@@ -180,7 +180,7 @@ const chartOptions = {
   gap: 30px;
   flex-wrap: wrap;
   margin-bottom: 24px;
-  color: #e2def5;
+  color: var(--color-text-secondary);
 }
 .badge {
   padding: 4px 8px;
@@ -188,8 +188,16 @@ const chartOptions = {
   font-size: 0.8rem;
   font-weight: bold;
 }
-.badge.passed { background: rgba(46, 204, 113, 0.15); color: #d4edda; }
-.badge.failed { background: rgba(231, 76, 60, 0.15); color: #f8d7da; }
+.badge.passed {
+  background-color: var(--color-badge-passed-bg);
+  color: var(--color-success);
+  border: 1px solid var(--color-success);
+}
+.badge.failed {
+  background-color: var(--color-badge-failed-bg);
+  color: var(--color-bad);
+  border: 1px solid var(--color-bad);
+}
 
 .chart-section {
   background: rgba(255, 255, 255, 0.02);
@@ -205,7 +213,7 @@ const chartOptions = {
   align-items: center;
   margin-bottom: 20px;
   padding: 12px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--color-legend-bg);
   border-radius: 8px;
 }
 .color-box {
@@ -216,8 +224,8 @@ const chartOptions = {
   vertical-align: middle;
   margin-right: 5px;
 }
-.color-box.hit { background-color: #2ecc71; }
-.color-box.miss { background-color: #e74c3c; }
+.color-box.hit { background-color: var(--color-success); }
+.color-box.miss { background-color: var(--color-bad); }
 
 .cp-card {
   background: rgba(255, 255, 255, 0.03);
@@ -234,31 +242,31 @@ const chartOptions = {
 .cp-summary {
   text-align: right;
   font-size: 0.9rem;
-  color: #bfafe3;
+  color: var(--color-text-secondary);
   margin-top: 8px;
 }
 
 .cov-good {
-  background-color: #2ecc71 !important;
-  color: #2ecc71 !important;
+  background-color: var(--color-success) !important;
+  color: var(--color-success) !important;
 }
 .cov-warn {
-  background-color: #f39c12 !important;
-  color: #f39c12 !important;
+  background-color: var(--color-warning) !important;
+  color: var(--color-warning) !important;
 }
 .cov-bad {
-  background-color: #e74c3c !important;
-  color: #e74c3c !important;
+  background-color: var(--color-bad) !important;
+  color: var(--color-bad) !important;
 }
 
 .cov-good-border {
-  border-color: #2ecc71;
+  border-color: var(--color-success);
 }
 .cov-warn-border {
-  border-color: #f39c12;
+  border-color: var(--color-warning);
 }
 .cov-bad-border {
-  border-color: #e74c3c;
+  border-color: var(--color-bad);
 }
 
 .bin-grid {
