@@ -47,18 +47,18 @@ function handleLogin() {
 
 .btn-login {
   display: inline-block;
-  background-color: #1f1841;
+  background-color: var(--color-bg-dark);
   color: #ffffff;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 8px 18px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--color-grid-line);
   cursor: pointer;
 }
 
 .btn-login:hover {
-  border-color: #81d4fa;
-  color: #81d4fa;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 </style>
