@@ -26,3 +26,11 @@ def create_run_from_log(session, filename, text, uploaded_by = None):
     run_repository.create_run(session, run) 
 
     return run
+
+def check_if_filename_exists(db, filename):
+    runs = run_repository.get_all_runs(db)
+    for run in runs:
+        if run.filename == filename:
+            return True
+    return False
+

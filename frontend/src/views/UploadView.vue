@@ -63,7 +63,11 @@ async function handleUpload() {
     router.push(`/runs/${run.id}`)
 
   } catch (e) {
+    if(e.response?.status === 409){
+      errorMessage.value = 'Files with the same name are not permitted.'
+    } else {
     errorMessage.value = e.response?.data?.detail || 'Upload failed, please try again.'
+    }
   } finally {
     isUploading.value = false
   }

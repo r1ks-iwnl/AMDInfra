@@ -37,7 +37,9 @@ def get_run(run_id: int, db=Depends(get_db), user_email: str = Depends(get_curre
     return run
 
 @router.post("/upload", status_code=201, response_model=RunDetail, 
-             responses={400: {"description": "File is empty"}, 413: {"description": "File is too large"}},
+             responses={400: {"description": "File is empty"}, 
+                        413: {"description": "File is too large"},
+                        409: {"description": "Run already exists"}},
              tags=["Runs"], summary="Upload a .txt run log file.")
 async def upload_run(file: UploadFile = File(), db: Session = Depends(get_db), 
                      user_email: str = Depends(get_current_user)):
@@ -53,6 +55,9 @@ async def upload_run(file: UploadFile = File(), db: Session = Depends(get_db),
     
     text = raw.decode("utf-8")
 
+    if run_service.check_if_filename_exists(db, file.filename):
+        raise HTTPException(409, f"A run with the filename '{file.filename}' already exists")
+    
     try:
         return run_service.create_run_from_log(db, file.filename, text, user_email)
     except ValueError as exc:
