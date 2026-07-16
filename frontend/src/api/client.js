@@ -32,6 +32,6 @@ api.interceptors.response.use(
   }
 )
 
-export const getLoginUrl = `${api.defaults.baseURL}auth/login`
+export const getLoginUrl = `${api.defaults.baseURL}/auth/login`
 
 export default api
