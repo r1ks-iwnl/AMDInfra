@@ -2,45 +2,64 @@
 
 ### Backend/Frontend app for hosting & analysis of hardware Functional Coverage reports
 
+## Requirements
+**Python (v3.11 or higher)** — [Download Python](https://www.python.org/downloads/)
+
+**Node.js (v18.x or higher)** — [Download Node.js](https://nodejs.org/)
+
 ## Configuration
 Set up .env according to .env.example to avoid unexpected behaviour.
 
-# Command examples
+# Setup commands
 
 ### Backend
 From the repository root:
 
+Set up python virtual environment:
 ```powershell
 python -m venv .venv
-source .venv/bin/activate
+```
+
+In bash activate virtual environment:
+```bash
+source ./.venv/Scripts/activate
+```
+
+Install required libraries:
+```powershell
 pip install -r requirements.txt
-uvicorn backend.app.main:app --reload
+```
+
+From the `database` directory generate the database tables:
+
+```powershell
+alembic upgrade head
+```
+
+Back in `root` seed database with logs provided by `logs/`:
+```powershell
 python -m database.seed
 ```
 
-From the `backend/tests` directory:
+Run server at `http://localhost:8000`:
+```powershell
+uvicorn backend.app.main:app
+```
+
+
+You may also run tests from the `backend/tests` directory:
 
 ```powershell
 pytest -v
 ```
 
-### Database
-From the `database` directory:
-
-```powershell
-alembic upgrade head
-alembic revision --autogenerate -m "your message"
-```
-
 ### Frontend
 From the `frontend` directory:
 
+Install libraries and run the server at `http://localhost:5173`:
 ```powershell
 npm install
 npm run dev
-npm run lint
-npm run build
-npm run preview
 ```
 
 ## Duplication

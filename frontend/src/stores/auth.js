@@ -14,6 +14,8 @@ function decodeJWT(token){
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
+    // localStorage tokens are used for ease of developement
+    // this is a XSS vulnerability and in production should be replaced with HttpOnly cookies
     const token = localStorage.getItem('access_token') || null
 
     return {

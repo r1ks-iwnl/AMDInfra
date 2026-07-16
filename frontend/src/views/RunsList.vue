@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useRunsStore } from '@/stores/runs'
-import { fmtDate, fmtPct, covClass } from '@/utils/format'
+import { fmtDate, fmtPct, covClass, covBadgeText } from '@/utils/format'
 import { getSortIcon } from '@/utils/icons'
 
 const store = useRunsStore()
@@ -68,8 +68,8 @@ onMounted(async () => {
               {{ fmtPct(run.overall_coverage) }}
             </td>
             <td>
-              <span class="badge" :class="run.result.toLowerCase()">
-                {{ run.result }}
+              <span class="badge" :class="covClass(run.overall_coverage)">
+                {{ covBadgeText(run.overall_coverage) }}
               </span>
             </td>
           </tr>
@@ -132,12 +132,17 @@ th {
   font-size: 0.85rem;
   text-transform: uppercase;
 }
-.badge.passed {
+.badge.cov-good {
   background-color: var(--color-badge-passed-bg);
   color: var(--color-success);
   border: 1px solid var(--color-success);
 }
-.badge.failed {
+.badge.cov-warn {
+  background-color: var(--color-badge-failed-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+}
+.badge.cov-bad {
   background-color: var(--color-badge-failed-bg);
   color: var(--color-bad);
   border: 1px solid var(--color-bad);

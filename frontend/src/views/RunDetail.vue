@@ -2,7 +2,7 @@
 import { computed, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useRunDetailStore } from '@/stores/rundetail'
-import { covClass, fmtDate } from '@/utils/format'
+import { covClass, covBadgeText, fmtDate } from '@/utils/format'
 
 import BinCell from '@/components/BinCell.vue'
 import CoverageBar from '@/components/CoverageBar.vue'
@@ -84,8 +84,8 @@ const chartOptions = {
           <div><strong>Uploaded at:</strong> {{ fmtDate(store.currentRun.uploaded_at) }}</div>
           <div><strong>Uploaded by:</strong> {{ store.currentRun.uploaded_by }}</div>
           <div>
-            <strong>Result:</strong>
-            <span class="badge" :class="store.currentRun.result.toLowerCase()">{{ store.currentRun.result }}</span>
+            <strong>Result: </strong>
+            <span class="badge" :class="covClass(store.currentRun.overall_coverage)">{{ covBadgeText(store.currentRun.overall_coverage) }}</span>
           </div>
           <div><strong>Checks:</strong> {{ store.currentRun.checks }} </div>
           <div><strong>Bins (missed / total):</strong> {{ store.currentRun.missed_bins }} / {{ store.currentRun.total_bins }}</div>
@@ -186,18 +186,26 @@ const chartOptions = {
   margin-bottom: 24px;
   color: var(--color-text-secondary);
 }
+
 .badge {
+  display: inline-block;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.8rem;
   font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
 }
-.badge.passed {
+.badge.cov-good {
   background-color: var(--color-badge-passed-bg);
   color: var(--color-success);
   border: 1px solid var(--color-success);
 }
-.badge.failed {
+.badge.cov-warn {
+  background-color: var(--color-badge-failed-bg);
+  color: var(--color-warning);
+  border: 1px solid var(--color-warning);
+}
+.badge.cov-bad {
   background-color: var(--color-badge-failed-bg);
   color: var(--color-bad);
   border: 1px solid var(--color-bad);

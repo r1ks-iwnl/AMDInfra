@@ -6,4 +6,7 @@ export const fmtDate = (iso) =>
 export const fmtPct = (n) => `${n.toFixed(2)}%`
 
 export const covClass = (n) =>
-  n >= 90 ? 'cov-good' : n >= 70 ? 'cov-warn' : 'cov-bad'
+  n >= 95 ? 'cov-good' : n >= 80 ? 'cov-warn' : 'cov-bad'
+
+export const covBadgeText = (n) =>
+  n >= 95 ? 'Passed' : 'Failed'

@@ -12,10 +12,31 @@ const selectedFile = ref(null)
 const isUploading = ref(false)
 const errorMessage = ref(null)
 
+const isDragActive = ref(false)
+
 function handleFileChange(event) {
   const files = event.target.files
+  processFiles(files)
+}
+
+function handleDrop(event) {
+  isDragActive.value = false
+  const files = event.dataTransfer?.files
+  processFiles(files)
+}
+
+function processFiles(files) {
   if (files && files.length > 0) {
-    selectedFile.value = files[0]
+    const file = files[0]
+
+    if (!file.name.endsWith('.txt')) {
+      errorMessage.value = 'Only .txt files are allowed.'
+      selectedFile.value = null
+      if (fileInput.value) fileInput.value.value = ''
+      return
+    }
+
+    selectedFile.value = file
     errorMessage.value = null
   }
 }
@@ -42,7 +63,11 @@ async function handleUpload() {
     router.push(`/runs/${run.id}`)
 
   } catch (e) {
+    if(e.response?.status === 409){
+      errorMessage.value = 'Files with the same name are not permitted.'
+    } else {
     errorMessage.value = e.response?.data?.detail || 'Upload failed, please try again.'
+    }
   } finally {
     isUploading.value = false
   }
@@ -53,9 +78,16 @@ async function handleUpload() {
   <div class="upload-wrapper">
     <div class="upload-card">
       <h2>Upload a new run</h2>
-      <p class="subtitle">Select a log file.</p>
+      <p class="subtitle">Select or drag & drop a log file.</p>
 
-      <div class="dropzone">
+      <div
+        class="dropzone"
+        :class="{ 'is-dragged': isDragActive }"
+        @dragover.prevent="isDragActive = true"
+        @dragenter.prevent="isDragActive = true"
+        @dragleave.prevent="isDragActive = false"
+        @drop.prevent="handleDrop">
+
         <input
           type="file"
           ref="fileInput"
@@ -65,7 +97,7 @@ async function handleUpload() {
           id="file-upload"
         />
         <label for="file-upload" class="file-label">
-          <span v-if="!selectedFile">Select a file...</span>
+          <span v-if="!selectedFile">Select or Drag & Drop a file...</span>
           <span v-else class="file-name">{{ selectedFile.name }}</span>
         </label>
       </div>
@@ -117,6 +149,8 @@ h2 {
 
 .dropzone {
   margin-bottom: 20px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
 }
 
 .file-input {
@@ -125,15 +159,22 @@ h2 {
 
 .file-label {
   display: block;
-  padding: 20px;
+  padding: 30px 20px;
   border: 2px dashed rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
 }
 
 .file-label:hover {
   border-color: var(--color-accent);
+}
+
+.dropzone.is-dragged .file-label {
+  border-color: var(--color-accent);
+  background-color: rgba(255, 255, 255, 0.08);
+  transform: scale(0.98);
 }
 
 .file-name {
@@ -172,6 +213,7 @@ h2 {
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .btn-upload:hover:not(:disabled) {

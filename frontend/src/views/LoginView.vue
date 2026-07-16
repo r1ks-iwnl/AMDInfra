@@ -36,7 +36,7 @@ function handleLogin() {
       return
     }
     if (event.data && event.data.token) {
-      auth.login(event.data.token, event.data.email)
+      auth.login(event.data.token)
       popup.close()
       router.push(route.query.redirect || '/runs')
     }
